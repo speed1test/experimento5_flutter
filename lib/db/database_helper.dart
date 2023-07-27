@@ -26,9 +26,17 @@ class DatabaseHelper {
         await db.execute(
           "CREATE TABLE greetings(id INTEGER PRIMARY KEY AUTOINCREMENT, message TEXT)",
         );
+        await db.execute(
+          "CREATE TABLE preferencias(id INTEGER PRIMARY KEY AUTOINCREMENT, gusto TEXT)",
+        );
       },
       version: 1,
     );
+  }
+
+  Future<void> insertPreferencia(Preferencia preferencia) async {
+    final db = await database;
+    await db.insert('preferencias', preferencia.toMap());
   }
 
   Future<void> insertGreeting(Greeting greeting) async {
