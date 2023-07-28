@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:experimento5_flutter/db/task_model.dart';
+import 'package:experimento5_flutter/db/database_helper.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Menu Lateral')),
-      body: Center(child: Text('Esta es una prueba!')),
+      appBar: AppBar(title: Text('Preferencias')),
+      body: getPreferencia(),
       drawer: buildDrawer(context),
     );
   }
@@ -29,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                     accountName: new Text('Pablo'),
                     accountEmail: new Text('pablo@email.com'),
                     currentAccountPicture: new CircleAvatar(
-                        backgroundImage: new AssetImage('images/avatar.jpeg')
+                      backgroundImage: new AssetImage('images/avatar.jpeg'),
                     ),
                   ),
                 ],
@@ -51,11 +53,63 @@ class HomeScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Item #2'),
+            title: Text('Preferencias'),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/third');
             },
+          ),
+          ListTile(
+            title: Text('Mantenimiento'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/fourting');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class getPreferencia extends StatefulWidget {
+  @override
+  _PreferencesScreenState createState() => _PreferencesScreenState();
+}
+
+class _PreferencesScreenState extends State<getPreferencia> {
+  final TextEditingController _controller = TextEditingController();
+  final DatabaseHelper db = DatabaseHelper.instance;
+
+  List<Preferencia> preferencias = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshGreetingsList();
+  }
+
+  _refreshGreetingsList() async {
+    List<Preferencia> preferenciaList = await db.getPreferencias();
+    setState(() {
+      preferencias = preferenciaList;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: preferencias.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(preferencias[index].preferenciaMessage),
+                );
+              },
+            ),
           ),
         ],
       ),

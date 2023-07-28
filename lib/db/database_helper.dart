@@ -49,11 +49,24 @@ class DatabaseHelper {
     await db.delete('greetings');
   }
 
+  Future<void> deleteAllPreferences() async {
+    final db = await database;
+    await db.delete('preferencias');
+  }
+
   Future<List<Greeting>> getGreetings() async {
     final db = await database;
     var greetingsMapList = await db.query('greetings');
     return List.generate(greetingsMapList.length, (i) {
       return Greeting.fromMap(greetingsMapList[i]);
+    });
+  }
+
+  Future<List<Preferencia>> getPreferencias() async {
+    final db = await database;
+    var preferenciasMapList = await db.query('preferencias');
+    return List.generate(preferenciasMapList.length, (i) {
+      return Preferencia.fromMap(preferenciasMapList[i]);
     });
   }
 }

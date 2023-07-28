@@ -1,3 +1,5 @@
+
+import 'package:experimento5_flutter/activity/fourting.dart';
 import 'package:experimento5_flutter/activity/home.dart';
 import 'package:flutter/material.dart';
 import 'package:experimento5_flutter/activity/loading.dart';
@@ -11,6 +13,7 @@ void main() {
       "/home" : (context) => HomeScreen(),
       "/second" : (context) => SecondScreen(),
       "/third" : (context) => ThirdScreen(),
+      "/fourting": (context) => FourtingScreen()
     },
   ));
 }
