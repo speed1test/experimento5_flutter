@@ -41,28 +41,24 @@ class HomeScreen extends StatelessWidget {
           ListTile(
             title: Text('Home'),
             onTap: () {
-              Navigator.pop(context);
               Navigator.pushNamed(context, '/home');
             },
           ),
           ListTile(
             title: Text('Chat'),
             onTap: () {
-              Navigator.pop(context);
               Navigator.pushNamed(context, '/second');
             },
           ),
           ListTile(
             title: Text('Preferencias'),
             onTap: () {
-              Navigator.pop(context);
               Navigator.pushNamed(context, '/third');
             },
           ),
           ListTile(
             title: Text('Mantenimiento'),
             onTap: () {
-              Navigator.pop(context);
               Navigator.pushNamed(context, '/fourting');
             },
           ),
@@ -94,6 +90,31 @@ class _PreferencesScreenState extends State<getPreferencia> {
     setState(() {
       preferencias = preferenciaList;
     });
+
+    // Check if the index is zero and show the alert dialog
+    if (preferencias.isEmpty) {
+      _showZeroIndexAlert();
+    }
+  }
+
+  _showZeroIndexAlert() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Aviso'),
+          content: Text('No tienes preferencias registradas en la app.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Aceptar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
